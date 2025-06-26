@@ -7,11 +7,14 @@ import javax.swing.BorderFactory;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import java.awt.GridLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
+import java.util.Objects;
 
 public class AppForm extends JFrame {
     private JLabel text;
@@ -19,15 +22,22 @@ public class AppForm extends JFrame {
 
     public AppForm () {
         super("Счетчик");
-        super.setBounds(700, 200, 300, 200);
+        super.setBounds(0, 0, 300, 300);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel grid = new JPanel();
 
-        GridLayout layout = new GridLayout(2,1, 20, 20);
+        GridLayout layout = new GridLayout(3,1, 20, 20);
         grid.setLayout(layout);
 
         grid.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        ImageIcon img = new ImageIcon(Objects.requireNonNull(getClass().
+                getResource("/com/click_countr/images/miniature-schnauzer.png")));
+        Image scaledImage = img.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel label_img = new JLabel(scaledIcon);
+        grid.add(label_img);
 
         text = new JLabel(String.valueOf(count), SwingConstants.CENTER);
         text.setOpaque(true); // делаем область текста непрозрачной
@@ -45,6 +55,7 @@ public class AppForm extends JFrame {
         grid.add(button);
 
         getContentPane().add(grid);
+        setLocationRelativeTo(null);
 
         button.addActionListener(new ButtonAction());
     }
